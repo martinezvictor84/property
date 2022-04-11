@@ -1,13 +1,23 @@
 from services.property_service import PropertyService
+from services.property_service import FilterError
 import json
+import logging
 
 
 def property_handler(event, contex=None):
     config = get_settings()
     params = event['queryStringParameters'] or {}
-    service = PropertyService(config)
-    res = service.get_properties(params)
-    return response_json(200, res)
+    try:
+        service = PropertyService(config)
+        res = service.get_properties(params)
+        return response_json(200, res)
+    except FilterError:
+        return response_json(400, {'message': 'bad request'})
+    except Exception as e:
+        logging.error(str(e))
+        return response_json(500, {
+            'message': 'an error has occurred, please try'
+                       ' again or contact support'})
 
 
 def get_settings():
@@ -27,7 +37,6 @@ if __name__ == '__main__':
         'status_id': 1,
         'year': 2000,
         'city': 'bogota'
-
     }
     data = property_handler({'queryStringParameters': filters}, None)
     print(data)
