@@ -23,11 +23,11 @@ jobs:
       - name: Test with code
         env:
           ENV: ${{ secrets.ENV }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
-          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_HOST: '${{ secrets.DB_HOST }}'
+          DB_PORT: '${{ secrets.DB_PORT }}'
+          DB_USER: '${{ secrets.DB_USER }}'
+          DB_PASS: '${{ secrets.DB_PASS }}'
+          DB_NAME: '${{ secrets.DB_NAME }}'
         run: |
           env
           python3 -m unittest tests/test.py
@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: install flake8
         env:
-          TEST_KEY: ${{ secrets.GITHUB_TOKEN }}
+          TEST_KEY: '${{ secrets.GITHUB_TOKEN }}'
         run: |
           echo "$TEST_KEY"
 
