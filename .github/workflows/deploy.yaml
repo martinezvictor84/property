@@ -21,6 +21,7 @@ jobs:
           flake8 . --count --show-source --statistics
       - name: Test with pytest
         run: |
+          ls
           pytest test/test.py
   deploy:
     name: deploy
