@@ -20,7 +20,7 @@ jobs:
       - name: Lint with flake8
         run: |
           flake8 . --count --show-source --statistics
-      - name: Test with pytest
+      - name: Test with code
         run: |
           python3 -m unittest tests/test.py
   deploy:

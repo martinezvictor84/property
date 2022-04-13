@@ -1,0 +1,7 @@
+{
+  "queryStringParameters": {
+        "status_id": 1,
+        "year": 2000,
+        "city": "bogota"
+    }
+}

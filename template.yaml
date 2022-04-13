@@ -65,7 +65,7 @@ Resources:
           Type: Api
           Properties:
             Path: /properties
-            Method: post
+            Method: get
             RestApiId: !Ref HabiApi
 Outputs:
   WebhookApiUrl:

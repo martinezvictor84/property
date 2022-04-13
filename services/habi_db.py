@@ -12,6 +12,7 @@ class Connection:
 
     def query(self, query, params=None):
         try:
+            conn = None
             conn = connect(
                 host=self.host,
                 port=self.port,
@@ -27,7 +28,7 @@ class Connection:
         except Exception as e:
             raise DatabaseError(str(e))
         finally:
-            if conn.is_connected():
+            if conn and conn.is_connected():
                 cursor.close()
                 conn.close()
 
