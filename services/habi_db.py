@@ -42,8 +42,8 @@ class HabiDb(Connection):
         if 'status_id' in filters:
             sub_query = (
                 "select bsh.* from ("
-                    "select max(id) as id from status_history "
-                    "group by property_id "
+                "select max(id) as id from status_history "
+                "group by property_id "
                 ") as m "
                 "inner join status_history bsh on m.id = bsh.id and status_id = %(status_id)s "
             )
