@@ -33,7 +33,7 @@ class Connection:
 
 
 class HabiDb(Connection):
-    s
+
     def __init__(self, **kwargs):
         super(HabiDb, self).__init__(**kwargs)
 
@@ -45,7 +45,8 @@ class HabiDb(Connection):
                 "select max(id) as id from status_history "
                 "group by property_id "
                 ") as m "
-                "inner join status_history bsh on m.id = bsh.id and status_id = %(status_id)s "
+                "inner join status_history bsh "
+                "on m.id = bsh.id and status_id = %(status_id)s "
             )
             query += f"inner join ({sub_query}) sh on p.id = sh.property_id "
         if filters:
