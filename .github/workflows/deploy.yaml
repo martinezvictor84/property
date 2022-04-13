@@ -20,4 +20,10 @@ jobs:
     name: deploy
     needs: test
     runs-on: ubuntu-latest
+    steps:
+      - name: install flake8
+        env:
+          TEST_KEY: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo $TEST_KEY
 
