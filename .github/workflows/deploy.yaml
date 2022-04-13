@@ -29,6 +29,7 @@ jobs:
           DB_PASS: ${{ secrets.DB_PASS }}
           DB_NAME: ${{ secrets.DB_NAME }}
         run: |
+          env
           python3 -m unittest tests/test.py
   deploy:
     name: deploy
