@@ -11,11 +11,18 @@ jobs:
     name: test app
     runs-on: ubuntu-latest
     steps:
-      - name: install flake8
-        env:
-          TEST_KEY: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
         run: |
-          echo "$TEST_KEY"
+          python3 -m pip install --upgrade pip
+          pip3 install flake8
+          if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+      - name: Test with pytest
+        run: |
+          python3 -m unittest tests/test.py
   deploy:
     name: deploy
     needs: test
