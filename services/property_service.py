@@ -13,9 +13,8 @@ def get_filter(params):
 
 
 class PropertyService:
-    def __init__(self, settings):
-        self.setting = settings
-        self.habi_db = HabiDb(**settings)
+    def __init__(self):
+        self.habi_db = HabiDb()
 
     def get_properties(self, params):
         try:

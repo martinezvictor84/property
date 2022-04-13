@@ -1,13 +1,14 @@
 from mysql.connector import connect
+import os
 
 
 class Connection:
-    def __init__(self, host, port, user, password, database):
-        self.host = host
-        self.port = port
-        self.user = user
-        self.password = password
-        self.database = database
+    def __init__(self):
+        self.host = os.getenv('DB_HOST')
+        self.port = os.getenv('DB_PORT')
+        self.user = os.getenv('DB_USER')
+        self.password = os.getenv('DB_PASS')
+        self.database = os.getenv('DB_NAME')
 
     def query(self, query, params=None):
         try:
