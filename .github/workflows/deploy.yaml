@@ -15,7 +15,7 @@ jobs:
         env:
           TEST_KEY: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "$TEST_KEY"
+          echo "hola este es el $TEST_KEY"
   deploy:
     name: deploy
     needs: test
