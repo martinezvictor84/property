@@ -32,6 +32,7 @@ jobs:
           python3 -m unittest tests/test.py
   deploy:
     name: deploy
+    if: ${{ github.ref_name == 'main' }}
     needs: test
     runs-on: ubuntu-latest
     environment: TEST
