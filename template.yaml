@@ -46,10 +46,10 @@ Resources:
     Properties:
       StageName: api
       Cors: "'*'"
-  WebhookFunction:
+  GetPropertiesFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src
+      CodeUri: ./
       Handler: app.property_handler
       Runtime: python3.8
       Environment:
@@ -61,13 +61,13 @@ Resources:
           DB_PASS: !Ref DbPass
           DB_NAME: !Ref DbName
       Events:
-        Webhook:
+        GetProperties:
           Type: Api
           Properties:
             Path: /properties
             Method: get
             RestApiId: !Ref HabiApi
 Outputs:
-  WebhookApiUrl:
+  HabiApiUrl:
     Description: "API Gateway endpoint URL Habi API"
     Value: !Sub "https://${HabiApi}.execute-api.${AWS::Region}.amazonaws.com/api/"
