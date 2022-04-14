@@ -29,16 +29,26 @@ jobs:
           flake8 . --count --show-source --statistics
       - name: Test with code
         run: |
-          env
           python3 -m unittest tests/test.py
   deploy:
     name: deploy
+    if: ${{ github.ref_name == 'main' }}
     needs: test
     runs-on: ubuntu-latest
+    environment: TEST
     steps:
-      - name: install flake8
-        env:
-          TEST_KEY: '${{ secrets.DB_PORT }}'
+      - uses: actions/checkout@v3
+      - name: install aws-sam-cli
         run: |
-          echo $TEST_KEY
+          pip install aws-sam-cli==1.37.0 awscli
+      - name: configure aws
+        run: |
+          aws configure --profile default set aws_access_key_id ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws configure --profile default set aws_secret_access_key ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws configure --profile default set region ${{secrets.AWS_DEFAULT_REGION}}
+      - name: sam deploy
+        run: |
+          sam build --region ${{secrets.AWS_DEFAULT_REGION}} --build-dir .aws-sam/build
+          sam package --template-file .aws-sam/build/template.yaml --output-template-file packaged.yaml --region ${{secrets.AWS_DEFAULT_REGION}} --s3-prefix property-stack --s3-bucket ${{secrets.S3_BUCKET}}
+          sam deploy --template-file packaged.yaml --stack-name property-stack --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{secrets.AWS_DEFAULT_REGION}} --s3-prefix property-stack --s3-bucket ${{secrets.S3_BUCKET}} --parameter-overrides 'DbHost=${{secrets.DB_HOST}} DbPort=${{secrets.DB_PORT}} DbUser=${{secrets.DB_USER}} DbPass=${{secrets.DB_PASS}} DbName=${{secrets.DB_NAME}}'
 
