@@ -36,6 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: TEST
     steps:
+      - uses: actions/checkout@v3
       - name: install aws-sam-cli
         run: |
           pip install aws-sam-cli==1.37.0 awscli
@@ -47,6 +48,6 @@ jobs:
       - name: sam deploy
         run: |
           sam build --region ${{secrets.AWS_DEFAULT_REGION}} --build-dir .aws-sam/build
-          sam package --template-file .aws-sam/build/template.yaml --output-template-file packaged.yaml --region ${{secrets.AWS_DEFAULT_REGION}} --s3-prefix ${{secrets.STACK_NAME}} --s3-bucket ${{secrets.S3_BUCKET}}
-          sam deploy --template-file packaged.yaml --stack-name ${{secrets.STACK_NAME}} --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{secrets.AWS_DEFAULT_REGION}} --s3-prefix ${{secrets.STACK_NAME}} --s3-bucket ${{secrets.S3_BUCKET}}
+          sam package --template-file .aws-sam/build/template.yaml --output-template-file packaged.yaml --region ${{secrets.AWS_DEFAULT_REGION}} --s3-prefix property-stack --s3-bucket ${{secrets.S3_BUCKET}}
+          sam deploy --template-file packaged.yaml --stack-name property-stack --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{secrets.AWS_DEFAULT_REGION}} --s3-prefix property-stack --s3-bucket ${{secrets.S3_BUCKET}}
 
