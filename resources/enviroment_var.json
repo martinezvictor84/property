@@ -1,6 +1,5 @@
 {
   "Parameters": {
-    "ENV": "DEV",
     "DB_HOST": "1.1.1.1",
     "DB_PORT": 3302,
     "DB_USER": "user",

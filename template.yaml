@@ -15,10 +15,6 @@ Parameters:
     Description: Determina en bytes, el tamaño maximo de los mensajes que puede procesar, el maximo global es de 262144 bytes.
     Type: Number
     Default: 262144
-  Env:
-    Description: Determina el entorno(PROD, DEV, TEST)
-    Type: String
-    Default: ""
   DbHost:
     Description: host of database
     Type: String
@@ -54,7 +50,6 @@ Resources:
       Runtime: python3.8
       Environment:
         Variables:
-          ENV: !Ref Env
           DB_HOST: !Ref DbHost
           DB_PORT: !Ref DbPort
           DB_USER: !Ref DbUser
