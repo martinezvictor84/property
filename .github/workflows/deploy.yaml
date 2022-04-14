@@ -49,5 +49,5 @@ jobs:
         run: |
           sam build --region ${{secrets.AWS_DEFAULT_REGION}} --build-dir .aws-sam/build
           sam package --template-file .aws-sam/build/template.yaml --output-template-file packaged.yaml --region ${{secrets.AWS_DEFAULT_REGION}} --s3-prefix property-stack --s3-bucket ${{secrets.S3_BUCKET}}
-          sam deploy --template-file packaged.yaml --stack-name property-stack --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{secrets.AWS_DEFAULT_REGION}} --s3-prefix property-stack --s3-bucket ${{secrets.S3_BUCKET}} --parameter-overrides 'DB_HOST=${{ secrets.DB_HOST }} DB_PORT=${{ secrets.DB_PORT }} DB_USER=${{ secrets.DB_USER }} DB_PASS=${{ secrets.DB_PASS }} DB_NAME=${{ secrets.DB_NAME }}'
+          sam deploy --template-file packaged.yaml --stack-name property-stack --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{secrets.AWS_DEFAULT_REGION}} --s3-prefix property-stack --s3-bucket ${{secrets.S3_BUCKET}} --parameter-overrides 'DbHost=${{secrets.DB_HOST}} DbPort=${{secrets.DB_PORT}} DbUser=${{secrets.DB_USER}} DbPass=${{secrets.DB_PASS}} DbName=${{secrets.DB_NAME}}'
 
