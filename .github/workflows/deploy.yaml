@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: install flake8
         env:
-          TEST_KEY: '${{ secrets.GITHUB_TOKEN }}'
+          TEST_KEY: '${{ secrets.DB_PORT }}'
         run: |
-          echo "$TEST_KEY"
+          echo $TEST_KEY
 
