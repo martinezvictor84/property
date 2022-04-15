@@ -5,6 +5,14 @@ import json
 
 class TestPropertyServices(unittest.TestCase):
 
+    def test_get_properties_pagination(self):
+        f = open("resources/event_api_poperty_pagination.json")
+        event = json.load(f)
+        f.close()
+        res = property_handler(event, None)
+        self.assertEqual(len(json.loads(res['body'])), 1)
+        self.assertEqual(res['statusCode'], 200)
+
     def test_get_properties_with_filter(self):
         f = open("resources/event_api_poperty.json")
         event = json.load(f)
