@@ -1,5 +1,5 @@
 {
   "queryStringParameters": {
-        "year_gte": 2000
+        "year_gte": "2000"
     }
 }
