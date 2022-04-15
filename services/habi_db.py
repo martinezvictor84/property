@@ -57,10 +57,12 @@ class HabiDb(Connection):
             first = True
             for key, value in filters.items():
                 if not first:
-                    query += f"and {value['column']} {value['condition']} %({key})s "
+                    query += f"and {value['column']}" \
+                             f" {value['condition']} %({key})s "
                 else:
                     first = False
-                    query += f"{value['column']} {value['condition']} %({key})s "
+                    query += f"{value['column']}" \
+                             f" {value['condition']} %({key})s "
         query += f'limit {per_page} offset {offset}'
         print(query)
         params = {key: value['value'] for key, value in filters.items()}
