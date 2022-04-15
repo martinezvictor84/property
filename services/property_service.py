@@ -10,11 +10,14 @@ def get_filter(params):
         "price_lte": {'column': 'price', 'condition': '<='},
         "city": {'column': 'city', 'condition': '='}
     }
-    return {key: {
+    per_page = int(params.get('per_page', 50))
+    page = int(params.get('page', 1))
+    filters = {key: {
                 'value': params.get(key),
                 'column': filter_map[key]['column'],
                 'condition': filter_map[key]['condition']
             } for key, value in filter_map.items() if params.get(key)}
+    return filters, page, per_page
 
 
 class PropertyService:
@@ -23,9 +26,7 @@ class PropertyService:
 
     def get_properties(self, params):
         try:
-            filters = get_filter(params)
-            per_page = params.get('per_page', 50)
-            page = params.get('page', 1)
+            filters, page, per_page = get_filter(params)
         except Exception as e:
             raise FilterError(str(e))
         return self.habi_db.get_properties(filters, page, per_page)

@@ -1,6 +1,6 @@
 {
   "queryStringParameters": {
-        "page": 1,
-        "per_page": 1
+        "page": "a",
+        "per_page": "1"
     }
 }

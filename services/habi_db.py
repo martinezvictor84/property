@@ -6,7 +6,6 @@ class Connection:
     def __init__(self):
         self.host = os.getenv('DB_HOST')
         self.port = os.getenv('DB_PORT')
-        print('port: ', self.port)
         self.user = os.getenv('DB_USER')
         self.password = os.getenv('DB_PASS')
         self.database = os.getenv('DB_NAME')
