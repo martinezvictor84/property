@@ -28,9 +28,10 @@ def response_json(status_code: int, body: dict):
 
 if __name__ == '__main__':
     filters = {
-        'status_id': 1,
-        'year': 2000,
-        'city': 'bogota'
+        'status_id': 5,
+        'year_gte': 1000,
+        'per_page': 1,
+        'page': 1
     }
     data = property_handler({'queryStringParameters': filters}, None)
     print(data)
