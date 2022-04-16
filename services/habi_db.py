@@ -66,9 +66,7 @@ class HabiDb(Connection):
                     query += f"{value['column']}" \
                              f" {value['condition']} %({key})s "
         query += f'limit {per_page} offset {offset}'
-        print(query)
         params = {key: value['value'] for key, value in filters.items()}
-        print(params)
         return self.query(query, params)
     pass
 
