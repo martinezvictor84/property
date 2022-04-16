@@ -21,7 +21,7 @@ El despliegue se realiza de manera automatica(integracion continua), atravez de 
 El api actualmente se encuentra en:
 
 
-https://9zw24tbwb5.execute-api.us-west-2.amazonaws.com/api/properties
+https://9zw24tbwb5.execute-api.us-west-2.amazonaws.com/api/property
 
     
 
