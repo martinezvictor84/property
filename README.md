@@ -77,7 +77,7 @@ GET /api/properties?page=1&per_page=50
     }
 ]
 ```
-##### codigos de respuesta http
+#### codigos de respuesta http
  | Status Code | Description |
 | :--- | :--- |
 | 200 | `OK` |
