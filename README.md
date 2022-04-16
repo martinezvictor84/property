@@ -18,6 +18,13 @@ Se hace uso del servicio lambda de aws, ideal para ejecutar microservicios o tar
 
 El despliegue se realiza de manera automatica(integracion continua), atravez de la herramienta de github actions, cuando se sube un nuevo cambio a al rama `main`, se realizan dos jobs, testing y deploy, para la rama de `develop` solo se ejecutan el job de testing, la definicion se encuentra en [deploy.yam](.github/workflows/deploy.yaml)
 
+El api actualmente se encuentra en:
+
+
+https://9zw24tbwb5.execute-api.us-west-2.amazonaws.com/api/properties
+
+    
+
 #### Jobs:
 - testing: corre linter flake8, corre las pruebas unitarias
 - deploy: despliega los cambios en recursos aws(usa sam)
@@ -38,7 +45,10 @@ las pruebas unitarias se realizaron con `unittest`, se definen los eventos en `/
 
 ## Documentacion API
 ### Obtener propiedades
-Obtiene las propiedades que se encuentren en los estados: “pre_venta”, “en_venta” y
+
+Url base: https://9zw24tbwb5.execute-api.us-west-2.amazonaws.com
+
+Devuelve las propiedades que se encuentren en los estados: “pre_venta”, “en_venta” y
 “vendido”
 
 ```http
@@ -55,7 +65,7 @@ GET /api/properties?page=1&per_page=50
 | `price_lte` | `null` | **number** |obtiene propieades menores o iguales al dato enviado |
 | `city` | `null` | **string** | obtiene solo propiedades de la ciudad indicada |
 
-####Reponse
+#### Reponse
 ```javascript
 [
     {
@@ -67,7 +77,7 @@ GET /api/properties?page=1&per_page=50
     }
 ]
 ```
-#####codigos de respuesta http
+##### codigos de respuesta http
  | Status Code | Description |
 | :--- | :--- |
 | 200 | `OK` |
@@ -112,4 +122,22 @@ sam build -u
 sam local start-api -n resources/enviroment_var.json -t template.yaml --docker-network host  --warm-containers EAGER
 ```
 
+## Propuesta servicio me gusta
+Se propone agregar dos tablas en la base de datos `interaction` y `type_interaction`
+
+**type_interaction**: almacena los tipos de iteracciones que podria tener un usuario con una propiedad, se agregra un registro para la interaccion like
+
+**interaccion**: guarda la interacccion de un usuario con una propiedad
+
+acontinuacion se muestra un diagrama con los campos propuesto para cada tabla y sus relaciones:
+
+![Solucion Propuesta!](resources/img/propuesta_db.png "Solucion propuesta")
+
 ## Mejoras sugeridas
+Actualmente para consultar el estado de una propiedad debemos buscar primero el ultimo estado resistado en `status_history`, en el momento de aplicar un filtro por estado, primero debemos calcular el ultimo estado para cada propiedad eso hace mas pesado el query y que tome mas tiempo en realizace.
+
+Como sugerencia para mejorar la velocidad del servio para consultar las propuedades, se recomienda agregar el campo `last_status_id` campo en la tabla `property`
+
+modelo resultante:
+
+![Mejora Propuesta!](resources/img/mejora_db.png "Mejora propuesta")
