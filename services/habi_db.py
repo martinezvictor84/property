@@ -40,7 +40,9 @@ class HabiDb(Connection):
 
     def get_properties(self, filters=None, page=1, per_page=50):
         offset = (0 if page < 0 else page - 1) * per_page
-        query = "select p.* from property p "
+        query = ("select "
+                 "p.address, p.city, s.name as status, p.price, p.description "
+                 "from property p ")
         sub_query = (
             "select bsh.* from ("
             "select max(id) as id from status_history "
@@ -50,7 +52,8 @@ class HabiDb(Connection):
             "on m.id = bsh.id "
             "and status_id in (3, 4, 5)"
         )
-        query += f"inner join ({sub_query}) sh on p.id = sh.property_id "
+        query += (f"inner join ({sub_query}) sh on p.id = sh.property_id "
+                  f"inner join status s on s.id = sh.status_id ")
         if filters:
             query += "where "
             first = True
@@ -65,6 +68,7 @@ class HabiDb(Connection):
         query += f'limit {per_page} offset {offset}'
         print(query)
         params = {key: value['value'] for key, value in filters.items()}
+        print(params)
         return self.query(query, params)
     pass
 
