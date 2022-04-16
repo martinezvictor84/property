@@ -1,9 +1,9 @@
 {
   "Parameters": {
-    "DB_HOST": "1.1.1.1",
-    "DB_PORT": 3302,
-    "DB_USER": "user",
-    "DB_PASS": "***",
-    "DB_NAME": "db"
+    "DB_HOST": "3.130.126.210",
+    "DB_PORT": 3309,
+    "DB_USER": "pruebas",
+    "DB_PASS": "VGbt3Day5R",
+    "DB_NAME": "habi_db"
   }
 }

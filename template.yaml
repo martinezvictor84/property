@@ -59,7 +59,7 @@ Resources:
         GetProperties:
           Type: Api
           Properties:
-            Path: /properties
+            Path: /property
             Method: get
             RestApiId: !Ref HabiApi
 Outputs:
