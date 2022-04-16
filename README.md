@@ -16,7 +16,7 @@ El proyecto se realizo usando algunos servicios de AWS, no se utiliza ningun fra
 
 Se hace uso del servicio lambda de aws, ideal para ejecutar microservicios o tareas que consuman poco tiempo y recursos. Para disponer de un endpoint se uso el servico api gateway de aws, este se encarga de recibir el request y ejecutar por medio de un evento el lambda, pasado los datos del request.
 
-El despliegue se realiza de manera automatica(integracion continua), atravez de la herramienta de github actions, cuando se sube un nuevo cambio a al rama `main`, se realizan dos jobs, testing y deploy, para la rama de `develop` solo se ejecutan el job de testing, la definicion se encuentra en [deploy.yam](.github/workflows/deploy.yaml)
+El despliegue se realiza de manera automatica(integracion continua), atravez de la herramienta de github actions, cuando se sube un nuevo cambio a al rama `main`, se realizan dos jobs, testing y deploy, para la rama de `develop` solo se ejecutan el job de testing, la definicion se encuentra en [`.github/workflows/deploy.yaml`](.github/workflows/deploy.yaml)
 
 El api actualmente se encuentra en:
 
@@ -52,7 +52,7 @@ Devuelve las propiedades que se encuentren en los estados: “pre_venta”, “e
 “vendido”
 
 ```http
-GET /api/properties?page=1&per_page=50
+GET /api/property?page=1&per_page=50
 ```
 | Parametro | Valor por defecto | tipo |Descripcion |
 | :--- | :--- | :--- |:--- |
@@ -123,6 +123,8 @@ sam local start-api -n resources/enviroment_var.json -t template.yaml --docker-n
 ```
 
 ## Propuesta servicio me gusta
+
+### Cambios en base de datos
 Se propone agregar dos tablas en la base de datos `interaction` y `type_interaction`
 
 **type_interaction**: almacena los tipos de iteracciones que podria tener un usuario con una propiedad, se agregra un registro para la interaccion like
@@ -132,6 +134,28 @@ Se propone agregar dos tablas en la base de datos `interaction` y `type_interact
 acontinuacion se muestra un diagrama con los campos propuesto para cada tabla y sus relaciones:
 
 ![Solucion Propuesta!](resources/img/propuesta_db.png "Solucion propuesta")
+
+El SQL para ejecutar esta actualizacion lo encuentra [`resouces/update_interaction.sql`](resouces/update_interaction.sql)
+
+### Endpoint
+Para el este servicio es necesario estar autenticado, de la autenticacion se tomara el valor `auth_user.id` para identificar el usuario que realiza la interaccion con la propiedad
+
+```http
+POST /api/property/{property_id}/interaction
+```
+#### Body
+```json
+{
+  "type_interaction_id": 1
+}
+```
+#### Response
+ | Status Code | Description |
+| :--- | :--- |
+| 201 | `CREATED` |
+| 400 | `BAD REQUEST` |
+| 404 | `NOT FOUND` |
+| 500 | `INTERNAL SERVER ERROR` |
 
 ## Mejoras sugeridas
 Actualmente para consultar el estado de una propiedad debemos buscar primero el ultimo estado resistado en `status_history`, en el momento de aplicar un filtro por estado, primero debemos calcular el ultimo estado para cada propiedad eso hace mas pesado el query y que tome mas tiempo en realizace.
