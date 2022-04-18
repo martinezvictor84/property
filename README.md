@@ -158,9 +158,9 @@ POST /api/property/{property_id}/interaction
 | 500 | `INTERNAL SERVER ERROR` |
 
 ## Mejoras sugeridas
-Actualmente para consultar el estado de una propiedad debemos buscar primero el ultimo estado resistado en `status_history`, en el momento de aplicar un filtro por estado, primero debemos calcular el ultimo estado para cada propiedad eso hace mas pesado el query y que tome mas tiempo en realizace.
+Actualmente para consultar el estado de una propiedad debemos buscar primero el ultimo estado registrado en `status_history`. En el momento de aplicar un filtro por estado primero debemos calcular el ultimo estado para cada propiedad, eso hace mas pesado el query y que tome mas tiempo en realizarse.
 
-Como sugerencia para mejorar la velocidad del servio para consultar las propuedades, se recomienda agregar el campo `last_status_id` campo en la tabla `property`
+Como sugerencia para mejorar la velocidad del servicio para consultar las propiedades se recomienda agregar el campo `last_status_id` en la tabla `property`
 
 modelo resultante:
 
