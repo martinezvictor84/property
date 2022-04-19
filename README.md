@@ -135,7 +135,7 @@ acontinuacion se muestra un diagrama con los campos propuesto para cada tabla y 
 
 ![Solucion Propuesta!](resources/img/propuesta_db.png "Solucion propuesta")
 
-El SQL para ejecutar esta actualizacion lo encuentra [`resouces/update_interaction.sql`](resouces/update_interaction.sql)
+El SQL para ejecutar esta actualizacion lo encuentra [`resources/update_interaction.sql`](resources/update_interaction.sql)
 
 ### Endpoint
 Para el este servicio es necesario estar autenticado, de la autenticacion se tomara el valor `auth_user.id` para identificar el usuario que realiza la interaccion con la propiedad
